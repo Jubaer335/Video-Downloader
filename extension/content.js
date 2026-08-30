@@ -1,5 +1,15 @@
-// Notify background script that we are ready to receive a URL
-chrome.runtime.sendMessage({ type: 'CONTENT_SCRIPT_READY' });
+// Only run the script if we are on the main YouTube downloader page (not facebook, etc)
+// And wait a bit to ensure Cloudflare isn't in the middle of refreshing
+setTimeout(() => {
+    if (window.location.pathname.includes('facebook') || window.location.pathname.includes('tiktok')) {
+        console.log("On wrong page, attempting to redirect back to youtube downloader");
+        window.location.href = "https://vd6s.net/en5/";
+        return;
+    }
+
+    // Notify background script that we are ready to receive a URL
+    chrome.runtime.sendMessage({ type: 'CONTENT_SCRIPT_READY' });
+}, 1000);
 
 chrome.runtime.onMessage.addListener((message, sender, sendResponse) => {
     if (message.type === 'PROCESS_URL') {
@@ -21,21 +31,25 @@ async function processUrl(url) {
         input.dispatchEvent(new Event('input', { bubbles: true }));
         input.dispatchEvent(new Event('change', { bubbles: true }));
 
-        // Sometimes an explicit button click is needed, usually adjacent to input
-        const searchBtn = document.querySelector('button[type="submit"]') ||
-                          document.querySelector('.btn-search') ||
-                          document.querySelector('button'); // fallback
-        if (searchBtn && (searchBtn.textContent.toLowerCase().includes('search') || searchBtn.textContent.toLowerCase().includes('start'))) {
-            searchBtn.click();
-        }
-
         // Wait for exactly 6 seconds after pasting link as requested
         await sleep(6000);
 
-        // 2. Wait for the download options to appear
-        // The results usually appear in a container, we'll wait for a download button to appear.
-        // We look for buttons that have "Download" text.
-        const optionsContainer = await waitForElement('.video-formats, .download-options, table, .result, #result', 15000);
+        // Check if results container appeared automatically
+        let optionsContainer = document.querySelector('.video-formats, .download-options, table, .result, #result');
+
+        // If not, try clicking the search button
+        if (!optionsContainer) {
+            const searchBtn = document.querySelector('button[type="submit"]') ||
+                              document.querySelector('.btn-search') ||
+                              document.querySelector('#btn-submit');
+            if (searchBtn) {
+                searchBtn.click();
+            }
+        }
+
+        // 2. Wait for the download options to appear (increased timeout to 60s for Cloudflare)
+        optionsContainer = await waitForElement('.video-formats, .download-options, table, .result, #result', 60000);
+
         if (!optionsContainer) {
             throw new Error("Options container not found after pasting link");
         }
