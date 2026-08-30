@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="UTF-8">
+  <title>YT Auto Downloader</title>
+  <link rel="stylesheet" href="popup.css">
+</head>
+<body>
+  <div class="container">
+    <h2>YT Auto Downloader</h2>
+
+    <div class="input-section">
+      <input type="text" id="urlInput" placeholder="Paste YouTube link here..." />
+      <button id="addBtn">Add</button>
+    </div>
+
+    <div class="list-section">
+      <h3>Download Queue</h3>
+      <ul id="linkList">
+        <!-- Links will be added here dynamically -->
+      </ul>
+    </div>
+
+    <div class="actions">
+      <button id="startBtn">Start Download</button>
+    </div>
+
+    <div id="statusMessage" class="status-message"></div>
+  </div>
+  <script src="popup.js"></script>
+</body>
+</html>

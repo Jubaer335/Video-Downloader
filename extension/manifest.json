@@ -1,0 +1,29 @@
+{
+  "manifest_version": 3,
+  "name": "YT Auto Downloader (vd6s)",
+  "version": "1.0",
+  "description": "Automates downloading a queue of YouTube videos from vd6s.net/en5/",
+  "permissions": [
+    "downloads",
+    "storage",
+    "tabs",
+    "scripting"
+  ],
+  "host_permissions": [
+    "https://vd6s.net/*"
+  ],
+  "action": {
+    "default_popup": "popup.html",
+    "default_title": "YT Auto Downloader"
+  },
+  "background": {
+    "service_worker": "background.js"
+  },
+  "content_scripts": [
+    {
+      "matches": ["https://vd6s.net/en5/*", "https://vd6s.net/*"],
+      "js": ["content.js"],
+      "run_at": "document_end"
+    }
+  ]
+}
