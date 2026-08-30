@@ -11,7 +11,7 @@ chrome.runtime.onMessage.addListener((message, sender, sendResponse) => {
 async function processUrl(url) {
     try {
         // 1. Find the input box and paste the URL
-        const input = await waitForElement('input[placeholder*="search keywords or paste video link here"]', 10000);
+        const input = await waitForElement('#txt-url, input[placeholder*="search"], input[name="query"]', 10000);
         if (!input) {
             throw new Error("Input box not found");
         }
