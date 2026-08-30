@@ -29,6 +29,9 @@ async function processUrl(url) {
             searchBtn.click();
         }
 
+        // Wait for exactly 6 seconds after pasting link as requested
+        await sleep(6000);
+
         // 2. Wait for the download options to appear
         // The results usually appear in a container, we'll wait for a download button to appear.
         // We look for buttons that have "Download" text.
