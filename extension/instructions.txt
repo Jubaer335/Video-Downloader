@@ -1,0 +1,30 @@
+# YT Auto Downloader (vd6s)
+
+This Chrome extension automates the process of downloading multiple YouTube videos via the website `vd6s.net`.
+
+## How to Install
+
+1. Download or clone this repository.
+2. Open Google Chrome.
+3. In the address bar, type `chrome://extensions/` and press Enter.
+4. In the top right corner, toggle the **Developer mode** switch to ON.
+5. Click the **Load unpacked** button in the top left.
+6. Select the folder containing these extension files (e.g., the `extension` folder).
+7. The extension is now installed and should appear in your Chrome toolbar (you may need to click the puzzle piece icon to pin it).
+
+## How to Use
+
+1. Click on the extension icon in your toolbar to open the popup.
+2. **Add Links:** Paste a YouTube URL into the text box and click **Add**. The link will appear in the "Download Queue" below. Repeat this for all the videos you want to download.
+   - If you make a mistake, you can click the **Remove** button next to any pending link.
+   - If you close the popup, the extension will remember any links that haven't been processed yet.
+3. **Start Downloading:** Once your queue is ready, click **Start Download**.
+4. The extension will automatically open a new tab to `vd6s.net/en5/`.
+5. **Do not close this new tab.** The extension will automatically paste the URL, select the highest available video quality, and initiate the download.
+6. The extension waits for the current download to completely finish before moving to the next link in your queue.
+7. You can click the extension icon at any time to check the status of your queue (Pending, Complete, or Failed).
+8. Once all items are processed, the tab will close automatically.
+
+## Notes
+- Ensure your browser settings allow automatic downloads without prompting for a save location every time, or you will have to manually confirm each save.
+- If a video fails to download, it will be marked as "FAILED" in the popup, and the extension will automatically proceed to the next link.
